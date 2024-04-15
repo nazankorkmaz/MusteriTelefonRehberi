@@ -22,7 +22,7 @@ def add_customer():
     print(name,"---",phone)
     try:
         connection = pyodbc.connect('DRIVER={SQL SERVER};' +
-                                    'Server=KORKMAZ\SQLEXPRESS;' +
+                                    'Server=K\SQLEXPRESS;' +
                                     'Database=ADDRESBOOK;' +
                                     'Trusted_Connection=True')
 
@@ -39,7 +39,7 @@ def add_customer():
         connection.close()
 
         connection = pyodbc.connect('DRIVER={SQL SERVER};' +
-                                    'Server=KORKMAZ\SQLEXPRESS;' +
+                                    'Server=K\SQLEXPRESS;' +
                                     'Database=ADDRESBOOK;' +
                                     'Trusted_Connection=True')
 
@@ -58,7 +58,7 @@ def add_customer():
         #Resim kaydetmek icin
 
         connection = pyodbc.connect('DRIVER={SQL SERVER};' +
-                                    'Server=KORKMAZ\SQLEXPRESS;' +
+                                    'Server=K\SQLEXPRESS;' +
                                     'Database=ADDRESBOOK;' +
                                     'Trusted_Connection=True')
 
@@ -86,7 +86,7 @@ def delete_customer():
     idSelected = tree.item(tree.selection())['values'][0]
 
     connection = pyodbc.connect('DRIVER={SQL SERVER};' +
-                                'Server=KORKMAZ\SQLEXPRESS;' +
+                                'Server=K\SQLEXPRESS;' +
                                 'Database=ADDRESBOOK;' +
                                 'Trusted_Connection=True')
 
@@ -101,7 +101,7 @@ def sortByName():
         tree.delete(x)
 
     connection = pyodbc.connect('DRIVER={SQL SERVER};' +
-                                'Server=KORKMAZ\SQLEXPRESS;' +
+                                'Server=K\SQLEXPRESS;' +
                                 'Database=ADDRESBOOK;' +
                                 'Trusted_Connection=True')
 
@@ -122,7 +122,7 @@ def SearchByName(event):
     name = entrySearchByName.get()
 
     connection = pyodbc.connect('DRIVER={SQL SERVER};' +
-                                'Server=KORKMAZ\SQLEXPRESS;' +
+                                'Server=K\SQLEXPRESS;' +
                                 'Database=ADDRESBOOK;' +
                                 'Trusted_Connection=True')
 
@@ -142,15 +142,14 @@ def SearchByPhone(event):
     phone = entrySearchByPhone.get()
 
     connection = pyodbc.connect('DRIVER={SQL SERVER};' +
-                                'Server=KORKMAZ\SQLEXPRESS;' +
+                                'Server=K\SQLEXPRESS;' +
                                 'Database=ADDRESBOOK;' +
                                 'Trusted_Connection=True')
 
     cursor = connection.cursor()
     select = cursor.execute("SELECT * FROM customer WHERE phone = ?", (phone,))
-    #Tek elemanlı bir demet oluştururken, demetin sonunda virgül kullanmak Python dilinde bir kuraldır.
     rows = cursor.fetchall()
-    #mevcut bir SQL sorgusunun tüm sonuçlarını alır ve bu sonuçları bir Python listesi olarak döndürür.
+    
     for row in rows:
         my_tuple4= tuple(row)
         tree.insert('', END, values=my_tuple4)
@@ -291,13 +290,8 @@ label_image.place(relx=0.2, rely=0.65)
 
 
 
-
-
 #add TreeView
-"""
-Treeview bileşeni, tablo benzeri bir yapıda verileri göstermek için kullanılır.
- Bu olay, kullanıcı bir satırı seçtiğinde veya odak satırı değiştiğinde tetiklenir.
-"""
+
 tree = ttk.Treeview(mainFrame,columns=(1,2,3), height=5, show="headings")
 tree.place(relx=0.33, rely=0.34, width=350, height=200)
 tree.bind("<<TreeviewSelect>>",treeActionSelect)
@@ -311,22 +305,11 @@ tree.heading(3,text="Phone")
 tree.column(1,width=50)
 tree.column(2,width=100)
 
-"""
-conn= pyodbc.connect('DRIVER={SQL SERVER};' +
-                                    'Server=KORKMAZ\SQLEXPRESS;' +
-                                    'Database=turtlecode;' +
-                                    'Trusted_Connection=True')
-cur= conn.cursor()
-select=cur.execute("select * from employees")
-for row in select:
-    tree.insert("",END,value=row)
-    print(row)
-"""
 
 #Display data in treeview object
 try:
     connection= pyodbc.connect('DRIVER={SQL SERVER};'+
-                                    'Server=KORKMAZ\SQLEXPRESS;'+
+                                    'Server=K\SQLEXPRESS;'+
                                     'Database=ADDRESBOOK;'+
                                     'Trusted_Connection=True')
     cursor = connection.cursor()
@@ -345,5 +328,3 @@ except pyodbc.Error as ex:
 
 
 root.mainloop()
-
-#KAYNAK :  https://www.youtube.com/watch?v=FNEK863Fuso&list=PLh-rUZWaw76GiHJjnGKgDoveKF1nzgjIV&index=10
